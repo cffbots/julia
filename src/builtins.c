@@ -1472,6 +1472,11 @@ JL_CALLABLE(jl_f__setsuper)
     return jl_nothing;
 }
 
+JL_CALLABLE(jl_f_dcebarrier)
+{
+    return jl_nothing;
+}
+
 static int equiv_field_types(jl_value_t *old, jl_value_t *ft)
 {
     size_t nf = jl_svec_len(ft);
@@ -1834,6 +1839,7 @@ void jl_init_primitives(void) JL_GC_DISABLED
     add_builtin_func("_setsuper!", jl_f__setsuper);
     jl_builtin__typebody = add_builtin_func("_typebody!", jl_f__typebody);
     add_builtin_func("_equiv_typedef", jl_f__equiv_typedef);
+    jl_builtin_dcebarrier = add_builtin_func("dcebarrier", jl_f_dcebarrier);
 
     // builtin types
     add_builtin("Any", (jl_value_t*)jl_any_type);

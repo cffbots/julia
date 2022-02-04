@@ -527,6 +527,7 @@ add_tfunc(atomic_pointerset, 3, 3, (a, v, order) -> (@nospecialize; a), 5)
 add_tfunc(atomic_pointerswap, 3, 3, (a, v, order) -> (@nospecialize; pointer_eltype(a)), 5)
 add_tfunc(atomic_pointermodify, 4, 4, atomic_pointermodify_tfunc, 5)
 add_tfunc(atomic_pointerreplace, 5, 5, atomic_pointerreplace_tfunc, 5)
+add_tfunc(dcebarrier, 0, INT_INF, (@nospecialize args...)->Nothing, 0)
 
 # more accurate typeof_tfunc for vararg tuples abstract only in length
 function typeof_concrete_vararg(t::DataType)
@@ -1695,6 +1696,8 @@ function _builtin_nothrow(@nospecialize(f), argtypes::Array{Any,1}, @nospecializ
             return true
         end
         return false
+    elseif f === dcebarrier
+        return true
     end
     return false
 end

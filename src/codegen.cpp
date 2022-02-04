@@ -3464,6 +3464,32 @@ static bool emit_builtin_call(jl_codectx_t &ctx, jl_cgval_t *ret, jl_value_t *f,
         return true;
     }
 
+    else if (f == jl_builtin_dcebarrier) {
+        *ret = mark_julia_const(ctx, jl_nothing);
+        bool emitted_any_side_effect = false;
+        for (size_t i = 1; i <= nargs; ++i) {
+            const jl_cgval_t &obj = argv[i];
+            if (obj.V) {
+                // TODO is this strong enough to constitute a read of any contained
+                // pointers?
+                Value *V = obj.V;
+                if (obj.isboxed) {
+                    V = emit_pointer_from_objref(ctx, V);
+                }
+                Value *slotv = emit_static_alloca(ctx, V->getType());
+                ctx.builder.CreateStore(V, slotv, true);
+                emitted_any_side_effect = true;
+            }
+        }
+        if (!emitted_any_side_effect) {
+            Function *sideeffect_func = Intrinsic::getDeclaration(
+                ctx.f->getParent(),
+                Intrinsic::sideeffect);
+            ctx.builder.CreateCall(sideeffect_func);
+        }
+        return true;
+    }
+
     return false;
 }
 

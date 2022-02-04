@@ -53,6 +53,7 @@ DECLARE_BUILTIN(typeassert);
 DECLARE_BUILTIN(_typebody);
 DECLARE_BUILTIN(typeof);
 DECLARE_BUILTIN(_typevar);
+DECLARE_BUILTIN(dcebarrier);
 
 JL_CALLABLE(jl_f_invoke_kwsorter);
 #ifdef DEFINE_BUILTIN_GLOBALS
@@ -65,6 +66,7 @@ JL_CALLABLE(jl_f__abstracttype);
 JL_CALLABLE(jl_f__primitivetype);
 JL_CALLABLE(jl_f__setsuper);
 JL_CALLABLE(jl_f__equiv_typedef);
+JL_CALLABLE(jl_f_dcebarrier);
 
 #ifdef __cplusplus
 }

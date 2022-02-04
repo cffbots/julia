@@ -711,3 +711,10 @@ end
 @test !cmp43123(Ref{Function}(+), Ref{Union{typeof(+), typeof(-)}}(-))
 @test cmp43123(Function[+], Union{typeof(+), typeof(-)}[+])
 @test !cmp43123(Function[+], Union{typeof(+), typeof(-)}[-])
+
+# Test that dcebarrier survives through to LLVM time
+f_dcebarrier_input(x) = dcebarrier(x+1)
+f_dcebarrier_const() = dcebarrier(1+1)
+@test occursin("store", get_llvm(f_dcebarrier_input, Tuple{Int64}, true, false, false))
+@test !occursin("store", get_llvm(f_dcebarrier_const, Tuple{}, true, false, false))
+@test occursin("llvm.sideeffect", get_llvm(f_dcebarrier_const, Tuple{}, true, false, false))

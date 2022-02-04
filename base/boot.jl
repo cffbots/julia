@@ -198,6 +198,8 @@ export
     <:, typeof, isa, typeassert,
     # method reflection
     applicable, invoke,
+    # dcebarrier
+    dcebarrier,
     # constants
     nothing, Main
 
