@@ -1,3 +1,4 @@
+# This is a CITATION.cff file!
 cff-version: 1.2.0
 message: "Cite this paper whenever you use Julia"
 authors:
