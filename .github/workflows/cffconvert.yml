@@ -2,6 +2,15 @@ name: cffconvert
 
 on:
   push:
+    branches:
+      - 'master'
+      - 'release-*'
+    paths:
+      - CITATION.cff
+  pull_request:
+    branches:
+      - 'master'
+      - 'release-*'
     paths:
       - CITATION.cff
 
