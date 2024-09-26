@@ -9,7 +9,7 @@ authors:
   given-names: "Stefan"
 - family-names: "Shah"
   given-names: "Viral B."
-title: "Julia: A fresh approach to numerical computing"
+titel: "Julia: A fresh approach to numerical computing"
 version: "v1"
 license: "MIT"
 doi: "10.1137/141000671"
